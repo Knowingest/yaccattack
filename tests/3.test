@@ -1,0 +1,6 @@
+program abc is
+{
+message :: string;
+message = "I am a message";
+print message;
+}
