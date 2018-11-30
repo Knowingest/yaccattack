@@ -7,16 +7,16 @@ int yycolumn = 1;
 
 /* declarations */
 
-%token ICONSTnumber PRINTnumber 
-%token PROGRAMnumber ISnumber 
-%token VARINTnumber VARSTRnumber 
-%token DIVnumber DOTnumber 
-%token SEMInumber LPARENnumber 
-%token MINUSnumber TIMESnumber 
-%token COMMAnumber RPARENnumber 
-%token PLUSnumber EQnumber 
-%token BEGINnumber ENDnumber 
-%token TYPESEPnumber STRINGnumber 
+%token ICONSTnumber PRINTnumber
+%token PROGRAMnumber ISnumber
+%token VARINTnumber VARSTRnumber
+%token DIVnumber DOTnumber
+%token SEMInumber LPARENnumber
+%token MINUSnumber TIMESnumber
+%token COMMAnumber RPARENnumber
+%token PLUSnumber EQnumber
+%token BEGINnumber ENDnumber
+%token TYPESEPnumber STRINGnumber
 %token IDnumber
 
 %start program
