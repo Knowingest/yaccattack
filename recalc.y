@@ -5,7 +5,7 @@ int x;
 
 /* declarations */
 
-%token INT STRING PRINT
+%token ICONSTnumber PRINTnumber PROGRAMnumber ISnumber VARINTnumber VARSTRnumber DIVnumber DOTnumber SEMInumber LPARENnumber MINUSnumber TIMESnumber COMMAnumber RPARENnumber PLUSnumber EQnumber BEGINnumber ENDnumber TYPESEPnumber
 
 %start program
 
@@ -43,47 +43,47 @@ factor -> integer constant | id | (expr)
 program : id ;
 id : is ;
 is : comp ;
-comp : '{' ST '}' ;
+comp : BEGINnumber ST ENDnumber ;
 
 ST : statement
    | statement ST
    ;
-statement : id '=' expr ';'
-		  | id '=' STRING ';'
+statement : id EQnumber expr SEMInumber
+		  | id EQnumber STRINGnumber SEMInumber
 		  | PRINT V
 		  | declaration
 		  ;
 V : value
-  | value ',' V
+  | value COMMAnumber V
   ;
-value : INT 
-	  | STRING
+value : ICONSTnumber 
+	  | STRINGnumber
 	  | id
 	  ;
 
-declaration : I ':' ':' VAL ;
+declaration : I TYPESEPnumber VAL ;
 
 I : id
-  | id ',' I
+  | id COMMAnumber I
   ;
-VAL : INT
-    | STRING
+VAL : VARINTnumber
+    | VARSTRnumber
     ;
 expr : T
-     | '-' T
+     | MINUSnumber T
      ;
 T : term
-  | term '+' T
-  | term '-' T
+  | term PLUSnumber T
+  | term MINUSnumber T
   ;
 term : F ;
 F : factor
-  | factor '*' F
-  | factor '/' F
+  | factor TIMESnumber F
+  | factor DIVnumber F
   ;
 factor : INT
        | id
-       | '(' expr ')'
+       | LPARENnumber expr RPARENnumber
        ;
 
 %%
