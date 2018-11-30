@@ -5,7 +5,7 @@ int x;
 
 /* declarations */
 
-%token ICONSTnumber PRINTnumber PROGRAMnumber ISnumber VARINTnumber VARSTRnumber DIVnumber DOTnumber SEMInumber LPARENnumber MINUSnumber TIMESnumber COMMAnumber RPARENnumber PLUSnumber EQnumber BEGINnumber ENDnumber TYPESEPnumber STRINGnumber
+%token ICONSTnumber PRINTnumber PROGRAMnumber ISnumber VARINTnumber VARSTRnumber DIVnumber DOTnumber SEMInumber LPARENnumber MINUSnumber TIMESnumber COMMAnumber RPARENnumber PLUSnumber EQnumber BEGINnumber ENDnumber TYPESEPnumber STRINGnumber IDnumber
 
 %start program
 
@@ -58,7 +58,7 @@ V : value
   ;
 value : ICONSTnumber 
 	  | STRINGnumber
-	  | id
+	  | IDnumber
 	  ;
 
 declaration : I TYPESEPnumber VAL ;
@@ -82,7 +82,7 @@ F : factor
   | factor DIVnumber F
   ;
 factor : ICONSTnumber
-       | id
+       | IDnumber
        | LPARENnumber expr RPARENnumber
        ;
 
