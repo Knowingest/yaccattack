@@ -1,8 +1,8 @@
 %{
 #include<stdio.h>
 int x;
-yyline = 1;
-yycolumn = 1;
+int yyline = 1;
+int yycolumn = 1;
 %}
 
 /* declarations */
