@@ -1,11 +1,16 @@
 %{
 #include<stdio.h>
-int x;
 int yyline = 1;
 int yycolumn = 1;
 %}
 
 /* declarations */
+
+%union { int sv;
+	char* s; 
+	struct{ char s[1000]; 
+		int sv;} struck;
+	}
 
 %token ICONSTnumber PRINTnumber
 %token PROGRAMnumber ISnumber
@@ -18,6 +23,7 @@ int yycolumn = 1;
 %token BEGINnumber ENDnumber
 %token TYPESEPnumber STRINGnumber
 %token IDnumber
+
 
 %start program
 
@@ -37,7 +43,7 @@ statement -> print V;
 statement -> declaration;
 
 V -> value | value, V
-value -> integer constant | string literal | id
+value -> integer constant | string literal | IDnumber
 
 declaration -> I :: VAL
 I -> id | id, I
@@ -52,31 +58,29 @@ F -> factor | factor * F | factor / F
 factor -> integer constant | id | (expr)
 */
 
-program : id ;
-id : is ;
-is : comp ;
+program : PROGRAMnumber IDnumber ISnumber comp
+	{printf("program accepted\n");}
 comp : BEGINnumber ST ENDnumber ;
 
 ST : statement
-   | statement ST
+   | ST statement
    ;
-statement : id EQnumber expr SEMInumber
-		  | id EQnumber STRINGnumber SEMInumber
-		  | PRINTnumber V
-		  | declaration
+statement : IDnumber EQnumber expr SEMInumber
+		  | IDnumber EQnumber STRINGnumber SEMInumber
+		  | PRINTnumber V SEMInumber
+		  | declaration SEMInumber
 		  ;
 V : value
-  | value COMMAnumber V
+  | V COMMAnumber value
   ;
-value : ICONSTnumber 
-	  | STRINGnumber
-	  | IDnumber
+value : STRINGnumber
+	  | expr
 	  ;
 
 declaration : I TYPESEPnumber VAL ;
 
-I : id
-  | id COMMAnumber I
+I : IDnumber
+  | I COMMAnumber IDnumber
   ;
 VAL : VARINTnumber
     | VARSTRnumber
@@ -85,13 +89,13 @@ expr : T
      | MINUSnumber T
      ;
 T : term
-  | term PLUSnumber T
-  | term MINUSnumber T
+  | T PLUSnumber term
+  | T MINUSnumber term
   ;
 term : F ;
 F : factor
-  | factor TIMESnumber F
-  | factor DIVnumber F
+  | F TIMESnumber factor
+  | F DIVnumber factor
   ;
 factor : ICONSTnumber
        | IDnumber
@@ -108,7 +112,7 @@ main()
 yyerror(s)
 char *s;
 {
-  fprintf(stderr, "%s\n",s);
+  fprintf(stderr, "%s at line %d \n",s, yyline);
 }
 
 yywrap()
