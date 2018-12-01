@@ -1,3 +1,14 @@
+//Harrison Hill  -  hmh16c
+
+//Due to time constraints within my other classes, 
+//this yacc program will only recognize syntactically correct and incorrect programs.
+
+//semantic analysis and interpretation has not been implemented.
+
+//I'm usually not this lazy, I promise.  It's just been a busy semester.
+
+//tests and errors 1, 2, and 3 all are detected correctly.  
+
 %{
 #include<stdio.h>
 int yyline = 1;
@@ -28,34 +39,13 @@ int yycolumn = 1;
 %start program
 
 %%
-/* parsing ruleset definitions 
+/*
+ST, V, VAL, I, T, F, etc.  are all intermediary steps in the CFG
+If I was re designing the CFG I would re name them to more exact names.
+this is just how I wrote it when I first made the CFG.
 
-CFG
+"program accepted" will print upon recognizing a syntactically correct program.
 
-program -> id
-id -> is
-is -> comp
-comp -> {ST}
-
-ST -> statement | statement ST
-statement -> id = expr; | id = string literal;
-statement -> print V;
-statement -> declaration;
-
-V -> value | value, V
-value -> integer constant | string literal | IDnumber
-
-declaration -> I :: VAL
-I -> id | id, I
-VAL -> int | string
-
-expr -> T | -T
-T -> term | term + T | term - T
-
-term -> F
-F -> factor | factor * F | factor / F
-
-factor -> integer constant | id | (expr)
 */
 
 program : PROGRAMnumber IDnumber ISnumber comp
